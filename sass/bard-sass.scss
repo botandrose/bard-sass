@@ -1,4 +1,6 @@
 @charset "UTF-8";
+@use "sass:list";
+@use "sass:meta";
 
 /// Generates an `@font-face` declaration. You can choose the specific file
 /// formats you need to output; the mixin supports `eot`, `ttf`, `svg`, `woff2`
@@ -84,9 +86,9 @@
 
   @each $key, $values in $formats-map {
     @if _contains($file-formats, $key) {
-      $file-path: nth($values, 1);
-      $font-format: nth($values, 2);
-      $src: append($src, font-url($file-path) $font-format, comma);
+      $file-path: list.nth($values, 1);
+      $font-format: list.nth($values, 2);
+      $src: list.append($src, font-url($file-path) $font-format, comma);
     }
   }
 
@@ -110,7 +112,7 @@
   $values...
 ) {
   @each $value in $values {
-    @if type-of(index($list, $value)) != "number" {
+    @if meta.type-of(list.index($list, $value)) != "number" {
       @return false;
     }
   }
